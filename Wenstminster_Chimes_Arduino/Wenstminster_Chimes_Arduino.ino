@@ -129,9 +129,9 @@ int secs=0;
 int msecs=0;
 int led=4;
 bool suonato=false;
-int addhours=18;
-int addmins=43;
-int addsecs=50;
+int addhours=11;
+int addmins=27;
+int addsecs=0;
 int bottone=5;
 int stato;
 
@@ -148,9 +148,9 @@ pinMode(bottone, INPUT);
 void loop() {
 
   
-hours=hours-mhours+addhours;
+hours=hours+addhours;
 addhours=0;
-mins=mins-mmins+addmins;
+mins=mins+addmins;
 addmins=0;
 secs=(millis()/1000)-msecs+addsecs;
 
