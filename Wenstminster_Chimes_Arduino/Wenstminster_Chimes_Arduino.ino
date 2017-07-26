@@ -113,7 +113,6 @@ NOTE_E3, NOTE_FS3, NOTE_GS3, NOTE_E3, 0,
 NOTE_GS3, NOTE_E3, NOTE_FS3, NOTE_B2, 0,
 0, 0, 0, 0 };
 
-// note durations: 4 = quarter note, 8 = eighth note, etc.:
 int noteDurations[] = {
 2.5, 2.5, 2.5, 1, 2,
 2.5, 2.5, 2.5, 1, 2,
@@ -129,18 +128,37 @@ int secs=0;
 int msecs=0;
 int led=4;
 bool suonato=false;
-int addhours=11;
-int addmins=31;
+
+
+int addhours=16;
+int addmins=24;
 int addsecs=0;
 int bottone=5;
-int stato;
 
+
+int stato;
+int secssaved;
+
+
+int day=26;
+int month=7;
+int year=2017;
+
+
+int change;
+int mostra;
+int mostraver;
+
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
 void setup() {
 pinMode(buzzer, OUTPUT);
 pinMode(led, OUTPUT);
 pinMode(3, OUTPUT);
 pinMode(bottone, INPUT);
+lcd.begin(16, 2);
 
   
 }
@@ -153,6 +171,106 @@ addhours=0;
 mins=mins+addmins;
 addmins=0;
 secs=(millis()/1000)-msecs+addsecs;
+
+if(secssaved!=secs){
+  secssaved=secs;
+  change=change+1;
+  mostra=mostra+1;
+  mostraver=mostraver+1;
+  if(change < 7){
+lcd.clear();
+lcd.setCursor(0, 0);
+lcd.print("Time: ");
+lcd.setCursor(6, 0);
+lcd.print(hours);
+lcd.setCursor(8, 0);
+lcd.print(":");
+lcd.setCursor(9, 0);
+lcd.print(mins);
+lcd.setCursor(11, 0);
+lcd.print(":");
+lcd.setCursor(12, 0);
+lcd.print(secs);
+lcd.setCursor(0, 1);
+lcd.print("Next:");
+lcd.setCursor(11, 1);
+lcd.print(":00");
+  }
+  else{
+lcd.clear();
+lcd.setCursor(0, 0);
+lcd.print("Date: ");
+lcd.setCursor(6, 0);
+lcd.print(day);
+lcd.setCursor(8, 0);
+lcd.print("/");
+lcd.setCursor(9, 0);
+lcd.print(month);
+lcd.setCursor(11, 0);
+lcd.print("/");
+lcd.setCursor(12, 0);
+lcd.print(year);
+if(change>10){
+change=0;
+}
+lcd.setCursor(0, 1);
+lcd.print("Next:");
+lcd.setCursor(11, 1);
+lcd.print(":00");
+    }
+
+if (mostraver>10){
+  lcd.setCursor(0, 1);
+  lcd.print("Version:        ");
+  delay(1500);
+  lcd.setCursor(0, 1);
+  lcd.print("26072017-INT");
+  delay(2000);
+  mostraver=0;
+  }
+  else{
+if(mins < 15){
+lcd.setCursor(6, 1);
+lcd.print(hours);
+lcd.setCursor(8, 1);
+lcd.print(":");
+lcd.setCursor(9, 1);
+lcd.print("15");
+
+}
+
+else{
+if(mins < 30){
+lcd.setCursor(6, 1);
+lcd.print(hours);
+lcd.setCursor(8, 1);
+lcd.print(":");
+lcd.setCursor(9, 1);
+lcd.print("30");
+}
+else{
+if(mins < 45){
+lcd.setCursor(6, 1);
+lcd.print(hours);
+lcd.setCursor(8, 1);
+lcd.print(":");
+lcd.setCursor(9, 1);
+lcd.print("45");
+}
+else{
+if(mins < 60){
+lcd.setCursor(6, 1);
+lcd.print(hours+1);
+lcd.setCursor(8, 1);
+lcd.print(":");
+lcd.setCursor(9, 1);
+lcd.print("00");
+}
+}
+}
+}
+}
+}
 
 
   if(mins>59){
@@ -170,7 +288,12 @@ secs=(millis()/1000)-msecs+addsecs;
 
   if(mins==0 && suonato==false && secs > 0){
     digitalWrite(led,HIGH);
-    for (int thisNote = 0; thisNote < 20; thisNote++) {
+       lcd.clear();
+   lcd.setCursor(0, 0);
+   lcd.print("Chiming...");
+   lcd.setCursor(0, 1);
+   lcd.print("Please wait");
+   for (int thisNote = 0; thisNote < 20; thisNote++) {
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(3, melody[thisNote], noteDuration);
     int pauseBetweenNotes = noteDuration * 1.30;
@@ -195,6 +318,11 @@ secs=(millis()/1000)-msecs+addsecs;
 
     
  digitalWrite(led,HIGH);
+    lcd.clear();
+  lcd.setCursor(0, 0);
+   lcd.print("Chiming...");
+   lcd.setCursor(0, 1);
+   lcd.print("Please wait");
     for (int thisNote = 0; thisNote < 20; thisNote++) {
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(3, melody1[thisNote], noteDuration);
@@ -213,6 +341,11 @@ secs=(millis()/1000)-msecs+addsecs;
 
     
  digitalWrite(led,HIGH);
+    lcd.clear();
+   lcd.setCursor(0, 0);
+   lcd.print("Chiming...");
+   lcd.setCursor(0, 1);
+   lcd.print("Please wait");
     for (int thisNote = 0; thisNote < 20; thisNote++) {
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(3, melody2[thisNote], noteDuration);
@@ -228,7 +361,13 @@ secs=(millis()/1000)-msecs+addsecs;
 
   
   if(mins==45 && suonato==false && secs>0){
+
    digitalWrite(led,HIGH);
+   lcd.clear();
+   lcd.setCursor(0, 0);
+   lcd.print("Chiming...");
+   lcd.setCursor(0, 1);
+   lcd.print("Please wait");
     for (int thisNote = 0; thisNote < 20; thisNote++) {
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(3, melody3[thisNote], noteDuration);
@@ -243,9 +382,18 @@ secs=(millis()/1000)-msecs+addsecs;
    suonato=true;
   }
 
+
+
  stato=digitalRead(bottone);
- if(stato==HIGH && secs < 44){
-      digitalWrite(led,HIGH);
+ if(stato==HIGH){
+  if(secs < 40){
+  digitalWrite(led,HIGH);
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Chiming...");
+  lcd.setCursor(0, 1);
+  lcd.print("Please wait");
+  
   for (int thisNote = 0; thisNote < 20; thisNote++) {
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(3, melody[thisNote], noteDuration);
@@ -255,8 +403,31 @@ secs=(millis()/1000)-msecs+addsecs;
     
 
   }
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Manual Chimes");
+  lcd.setCursor(0, 1);
+  lcd.print("Successful");
+  delay(2000);
+  
   }
-
+  else{
+    if(secs<58){
+   lcd.clear();
+   lcd.setCursor(0, 0);
+   lcd.print("Unable to chime");
+   lcd.setCursor(0, 1);
+   lcd.print("manually now.");
+   delay(750);
+   lcd.clear();
+   lcd.setCursor(0, 0);
+   lcd.print("Please wait");
+   lcd.setCursor(0, 1);
+   lcd.print(" ");
+   delay(1000);
+      }
+    }}
+ 
   
  
   
@@ -264,7 +435,32 @@ secs=(millis()/1000)-msecs+addsecs;
 
 
 
+if(month==2 && (year==2020 || year==2024 || year==2028  || year==2032)){
+  if (day > 29){
+    day=1;
+    month=month+1;}
+    }
+   else{
+    if (month == 2){
+    if(day>28){
+      day=1;
+      month=month+1;}}
+   }
 
+if(month==4 || month == 6 || month == 9 || month == 11){
+  if (day>30){
+    day=1;}
+    }
+    else{
+      if(day>31){
+        day=1;
+        month=month+1;}
+      }
+
+
+ 
+
+  
 
 if (mins==2||mins==17||mins==32||mins==47){
   suonato=false;
@@ -272,6 +468,10 @@ if (mins==2||mins==17||mins==32||mins==47){
 if(hours==24){
   if(millis()>10000){
   hours=0;
+  day=day+1;
   }
   }
+
+  if (month >12){
+    month=1;}
   }
