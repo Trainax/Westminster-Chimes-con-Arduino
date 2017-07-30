@@ -224,7 +224,7 @@ if (mostraver>10){
   lcd.print("Version:        ");
   delay(1500);
   lcd.setCursor(0, 1);
-  lcd.print("26072017-INT");
+  lcd.print("30072017-INT");
   delay(2000);
   mostraver=0;
   }
@@ -286,7 +286,7 @@ lcd.print("00");
   
   }
 
-  if(mins==0 && suonato==false && secs > 0){
+  if(mins==59 && suonato==false && secs >44){
     digitalWrite(led,HIGH);
        lcd.clear();
    lcd.setCursor(0, 0);
@@ -299,20 +299,26 @@ lcd.print("00");
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
     noTone(3);
-    suonato=true;
-    
-
   }
+  if(hours < 13){
   for(i=0;i<hours;i++){
   digitalWrite(buzzer, HIGH);
   delay(500);
   digitalWrite(buzzer, LOW);
   delay(750);
   }
-
-  
-
   }
+  else{
+    for(i=0;i<hours-11;i++){
+  digitalWrite(buzzer, HIGH);
+  delay(500);
+  digitalWrite(buzzer, LOW);
+  delay(750);
+  }
+    }
+  suonato=true;
+  }
+
   
   if(mins==15 && suonato==false && secs >0){
 
