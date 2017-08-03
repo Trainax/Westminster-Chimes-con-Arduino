@@ -221,7 +221,7 @@ if (mostraver>10){
   lcd.print("Version:        ");
   delay(1500);
   lcd.setCursor(0, 1);
-  lcd.print("30072017-ITA");
+  lcd.print("30072017-INT");
   delay(2000);
   mostraver=0;
   }
@@ -481,5 +481,6 @@ if(hours==24){
   }
 
   if (month >12){
-    month=1;}
+    month=1;
+    year=year+1;}
   }
