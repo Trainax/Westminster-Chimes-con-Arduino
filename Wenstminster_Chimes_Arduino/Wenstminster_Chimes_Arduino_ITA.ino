@@ -332,7 +332,9 @@ lcd.print("00");
   lcd.clear();
   lcd.print("Happy New Year");
     }
-    
+    else{
+    delay(10000);
+    }
   if(hours < 13){
   for(i=0;i<hours;i++){
   digitalWrite(buzzer, HIGH);
