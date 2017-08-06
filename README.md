@@ -1,8 +1,11 @@
-# Westminster-Chimes-with-Arduino
-This Arduino project is to make a clock that chimes like the Big Ben
+# Wenstminster Chimes con Arduino
 
-To set the time change the parameters of addhours to the current hour, addmins to the current mins and addsecs to the current seconds.
+Ho realizzato questo progetto per creare un orologio che battesse i quarti e le ore come il Big Ben di Londra.
 
-To set the date date change the parameters of day, month and year.
+Per modificare ora, data e giorno modificare i parametri: day, month, year, addhour, addmins, addsecs.
 
-Please always download the latest version and frequently check for new releases for bug fixes, improvements, more accuracy...
+La melodia dei tre quarti so che è differente dall'originale ma ho preferito farla così poiché mi piace molto di pìu.
+
+Controllate frequentemente qui per aggiornamenti, avvisi o altro. Gli aggiornamenti porteranno sempre maggiore affidabilità, accuratezza e nuove funzioni. Assicuratevi quindi di scaricare sempre l'ultima versione disponibile.
+
+DISCLAIMER: Non mi assumo alcuna responsabilità per danni a persone o cose derivate dall'uso di questo programma, prima di pubblicarlo lo testo a lungo sul mio Arduino personale, ma prestate sempre molta attenzione, né mi assumo responsabilità se il programma o l'Arduino si blocca, incontra un bug o altro e non vi svegliate in tempo e venite licenziati o perdete un appuntamento o un treno/autobus 👍. Grazie e divertitevi con la mia creazione!
