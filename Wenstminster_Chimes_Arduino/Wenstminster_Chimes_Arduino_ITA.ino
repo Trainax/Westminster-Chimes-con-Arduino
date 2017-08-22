@@ -90,28 +90,23 @@
 
 
 int melody[] = {
-NOTE_E3, NOTE_GS3, NOTE_FS3, NOTE_B2, 0,
-NOTE_E3, NOTE_FS3, NOTE_GS3, NOTE_E3, 0,
-NOTE_GS3, NOTE_E3, NOTE_FS3, NOTE_B2, 0,
-NOTE_B2, NOTE_FS3, NOTE_GS3, NOTE_E3 };
+NOTE_E4, NOTE_GS4, NOTE_FS4, NOTE_B3, 0,
+NOTE_E4, NOTE_FS4, NOTE_GS4, NOTE_E4, 0,
+NOTE_GS4, NOTE_E4, NOTE_FS4, NOTE_B3, 0,
+NOTE_B3, NOTE_FS4, NOTE_GS4, NOTE_E4 };
 
 int melody1[] = {
-NOTE_E3, NOTE_GS3, NOTE_FS3, NOTE_B2, 0,
-0, 0, 0, 0, 0,
-0, 0, 0, 0, 0,
-0, 0, 0, 0 };
+NOTE_E4, NOTE_GS4, NOTE_FS4, NOTE_B3, 0};
 
 int melody2[] = {
-NOTE_E3, NOTE_GS3, NOTE_FS3, NOTE_B2, 0,
-NOTE_E3, NOTE_FS3, NOTE_GS3, NOTE_E3, 0,
-0, 0, 0, 0, 0,
-0, 0, 0, 0 };
+NOTE_E4, NOTE_GS4, NOTE_FS4, NOTE_B3, 0,
+NOTE_E4, NOTE_FS4, NOTE_GS4, NOTE_E4, 0};
 
 int melody3[] = {
-NOTE_E3, NOTE_GS3, NOTE_FS3, NOTE_B2, 0,
-NOTE_E3, NOTE_FS3, NOTE_GS3, NOTE_E3, 0,
-NOTE_GS3, NOTE_E3, NOTE_FS3, NOTE_B2, 0,
-0, 0, 0, 0 };
+NOTE_E4, NOTE_GS4, NOTE_FS4, NOTE_B3, 0,
+NOTE_E4, NOTE_FS4, NOTE_GS4, NOTE_E4, 0,
+NOTE_GS4, NOTE_E4, NOTE_FS4, NOTE_B3, 0};
+
 
 // note durations: 4 = quarter note, 8 = eighth note, etc.:
 int noteDurations[] = {
@@ -119,6 +114,25 @@ int noteDurations[] = {
 2.5, 2.5, 2.5, 1, 2,
 2.5, 2.5, 2.5, 1, 2,
 2.5, 2.5, 2.5, 1 };
+
+int noteDurations1[] = {
+2.5, 2.5, 2.5, 1, 2,
+2.5, 2.5, 2.5, 1, 2,
+2.5, 2.5, 2.5, 1, 2,
+2.5, 2.5, 2.5, 1 };
+
+int noteDurations2[] = {
+2.5, 2.5, 2.5, 1, 2,
+2.5, 2.5, 2.5, 1, 2,
+2.5, 2.5, 2.5, 1, 2,
+2.5, 2.5, 2.5, 1 };
+
+int noteDurations3[] = {
+2.5, 2.5, 2.5, 1, 2,
+2.5, 2.5, 2.5, 1, 2,
+2.5, 2.5, 2.5, 1, 2,
+2.5, 2.5, 2.5, 1 };
+
 
 
 int buzzer=2;
@@ -129,14 +143,14 @@ int secs=0;
 int msecs=0;
 int led=4;
 bool suonato=true;
-int addhours=23;
-int addmins=59;
-int addsecs=32;
+int addhours=19;
+int addmins=21;
+int addsecs=20;
 int bottone=5;
 int stato;
 int secssaved;
-int day=31;
-int month=12;
+int day=22;
+int month=8;
 int year=2017;
 int change;
 int mostra;
@@ -177,7 +191,7 @@ if(secssaved!=secs){
   if(change < 7){
 lcd.clear();
 lcd.setCursor(0, 0);
-lcd.print("Time: ");
+lcd.print("Ora: ");
 lcd.setCursor(6, 0);
 lcd.print(hours);
 lcd.setCursor(8, 0);
@@ -189,14 +203,14 @@ lcd.print(":");
 lcd.setCursor(12, 0);
 lcd.print(secs);
 lcd.setCursor(0, 1);
-lcd.print("Next:");
+lcd.print("Prox:");
 lcd.setCursor(11, 1);
 lcd.print(":00");
   }
   else{
 lcd.clear();
 lcd.setCursor(0, 0);
-lcd.print("Date: ");
+lcd.print("Data: ");
 lcd.setCursor(6, 0);
 lcd.print(day);
 lcd.setCursor(8, 0);
@@ -211,17 +225,17 @@ if(change>10){
 change=0;
 }
 lcd.setCursor(0, 1);
-lcd.print("Next:");
+lcd.print("Prox:");
 lcd.setCursor(11, 1);
 lcd.print(":00");
     }
 
 if (mostraver>10){
   lcd.setCursor(0, 1);
-  lcd.print("Version:        ");
+  lcd.print("Versione:        ");
   delay(1500);
   lcd.setCursor(0, 1);
-  lcd.print("03082017-ITA");
+  lcd.print("22082017-ITA");
   delay(2000);
   mostraver=0;
   }
@@ -290,7 +304,7 @@ lcd.print("00");
    lcd.setCursor(0, 0);
    lcd.print("Chiming...");
    lcd.setCursor(0, 1);
-   lcd.print("Please wait");
+   lcd.print("Attendere, prego");
    for (int thisNote = 0; thisNote < 20; thisNote++) {
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(3, melody[thisNote], noteDuration);
@@ -298,6 +312,7 @@ lcd.print("00");
     delay(pauseBetweenNotes);
     noTone(3);
   }
+  
   if(day==31 && month==12 && hours == 23){
   lcd.clear();
   lcd.print("10");
@@ -330,27 +345,37 @@ lcd.print("00");
   lcd.print("1");
   delay(1000);
   lcd.clear();
-  lcd.print("Happy New Year");
+  lcd.print("Buon anno!");
     }
     else{
-    delay(10000);
-    }
-  if(hours < 13){
-  for(i=0;i<hours;i++){
-  digitalWrite(buzzer, HIGH);
-  delay(500);
-  digitalWrite(buzzer, LOW);
-  delay(500);
+      delay(10000);
+      }
+
+if(hours < 13){
+    for (int thisNote = 0; thisNote < hours; thisNote++) {
+    tone(3,  NOTE_E3, 1000);
+    digitalWrite(buzzer, HIGH);
+    delay(750);
+   
+    noTone(3);
+    digitalWrite(buzzer, LOW);
+    delay(750);
+ 
   }
+}
+else{
+    for (int thisNote = 0; thisNote < hours-11; thisNote++) {
+    tone(3,  NOTE_E3, 1000);
+    digitalWrite(buzzer, HIGH);
+    delay(750);
+   
+    noTone(3);
+    digitalWrite(buzzer, LOW);
+    delay(750);
+ 
   }
-  else{
-    for(i=0;i<hours-11;i++){
-  digitalWrite(buzzer, HIGH);
-  delay(500);
-  digitalWrite(buzzer, LOW);
-  delay(500);
+ 
   }
-    }
   suonato=true;
   }
 
@@ -367,9 +392,9 @@ lcd.print("00");
   lcd.setCursor(0, 0);
    lcd.print("Chiming...");
    lcd.setCursor(0, 1);
-   lcd.print("Please wait");
-    for (int thisNote = 0; thisNote < 20; thisNote++) {
-    int noteDuration = 1000 / noteDurations[thisNote];
+   lcd.print("Attendere, prego");
+    for (int thisNote = 0; thisNote < 5; thisNote++) {
+    int noteDuration = 1000 / noteDurations1[thisNote];
     tone(3, melody1[thisNote], noteDuration);
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
@@ -389,9 +414,9 @@ lcd.print("00");
    lcd.setCursor(0, 0);
    lcd.print("Chiming...");
    lcd.setCursor(0, 1);
-   lcd.print("Please wait");
-    for (int thisNote = 0; thisNote < 20; thisNote++) {
-    int noteDuration = 1000 / noteDurations[thisNote];
+   lcd.print("Attendere, prego");
+    for (int thisNote = 0; thisNote < 9; thisNote++) {
+    int noteDuration = 1000 / noteDurations2[thisNote];
     tone(3, melody2[thisNote], noteDuration);
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
@@ -411,9 +436,9 @@ lcd.print("00");
    lcd.setCursor(0, 0);
    lcd.print("Chiming...");
    lcd.setCursor(0, 1);
-   lcd.print("Please wait");
-    for (int thisNote = 0; thisNote < 20; thisNote++) {
-    int noteDuration = 1000 / noteDurations[thisNote];
+   lcd.print("Attendere, prego");
+    for (int thisNote = 0; thisNote < 14; thisNote++) {
+    int noteDuration = 1000 / noteDurations3[thisNote];
     tone(3, melody3[thisNote], noteDuration);
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
@@ -437,7 +462,7 @@ lcd.print("00");
   lcd.setCursor(0, 1);
   lcd.print("Please wait");
   
-  for (int thisNote = 0; thisNote < 20; thisNote++) {
+  for (int thisNote = 0; thisNote < 17; thisNote++) {
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(3, melody[thisNote], noteDuration);
     int pauseBetweenNotes = noteDuration * 1.30;
@@ -448,9 +473,9 @@ lcd.print("00");
   }
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Manual Chimes");
+  lcd.print("Chimes a mano");
   lcd.setCursor(0, 1);
-  lcd.print("Successful");
+  lcd.print("esito favorevole");
   delay(2000);
   
   }
@@ -458,13 +483,13 @@ lcd.print("00");
     if(secs<58){
    lcd.clear();
    lcd.setCursor(0, 0);
-   lcd.print("Unable to chime");
+   lcd.print("Impossibile suonare");
    lcd.setCursor(0, 1);
-   lcd.print("manually now.");
+   lcd.print("manualmente ota");
    delay(750);
    lcd.clear();
    lcd.setCursor(0, 0);
-   lcd.print("Please wait");
+   lcd.print("Attendere, prego");
    lcd.setCursor(0, 1);
    lcd.print(" ");
    delay(1000);
