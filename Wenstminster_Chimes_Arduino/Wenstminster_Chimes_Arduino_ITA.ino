@@ -96,16 +96,17 @@ NOTE_GS4, NOTE_E4, NOTE_FS4, NOTE_B3, 0,
 NOTE_B3, NOTE_FS4, NOTE_GS4, NOTE_E4 };
 
 int melody1[] = {
-NOTE_GS4, NOTE_FS4, NOTE_E4, NOTE_B3, 0};
+NOTE_GS4, NOTE_FS4, NOTE_E4, NOTE_B3};
 
 int melody2[] = {
 NOTE_E4, NOTE_GS4, NOTE_FS4, NOTE_B3, 0,
-NOTE_E4, NOTE_FS4, NOTE_GS4, NOTE_E4, 0};
+NOTE_E4, NOTE_FS4, NOTE_GS4, NOTE_E4};
 
 int melody3[] = {
 NOTE_GS4, NOTE_E4, NOTE_FS4, NOTE_B3, 0,
 NOTE_B3, NOTE_FS4, NOTE_GS4, NOTE_E4, 0,
-NOTE_GS4, NOTE_FS4, NOTE_E4, NOTE_B3, 0};
+NOTE_GS4, NOTE_FS4, NOTE_E4, NOTE_B3};
+
 
 
 // note durations: 4 = quarter note, 8 = eighth note, etc.:
@@ -129,6 +130,7 @@ int noteDurations3[] = {
 
 
 
+
 int buzzer=2;
 int i=0;
 int hours=0;
@@ -137,19 +139,22 @@ int secs=0;
 int msecs=0;
 int led=4;
 bool suonato=true;
-int addhours=21;
-int addmins=4;
-int addsecs=0;
+int addhours=15;
+int addmins=29;
+int addsecs=30;
 int bottone=5;
 int stato;
 int secssaved;
-int day=23;
-int month=8;
+int day=2;
+int month=9;
 int year=2017;
 int change;
 int mostra;
 int mostraver;
-
+int muto=6;
+bool mutato=false;
+int variabile;
+bool fatto=false;
 
 
 
@@ -176,6 +181,45 @@ addhours=0;
 mins=mins+addmins;
 addmins=0;
 secs=(millis()/1000)-msecs+addsecs;
+variabile=digitalRead(muto);
+if(variabile==HIGH){
+  if(mutato==false){
+  mutato=true;
+  delay(1000);}
+  else{
+  mutato=false;
+  delay(1000);}
+}
+
+  if(mutato==true){
+    if(fatto==false){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Orologio in");
+    lcd.setCursor(0,1);
+    lcd.print("spegnimento...");
+    delay(2500);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Ora disponibile");
+    lcd.setCursor(0,1);
+    lcd.print("solo mentre");
+    delay(1000);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("si suonano anche");
+    lcd.setCursor(0,1);
+    lcd.print("i quarti");
+    delay(2000);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Orologio");
+    lcd.setCursor(0,1);
+    lcd.print("disabilitato");
+    fatto=true;
+    }
+  }
+  else{
 
 if(secssaved!=secs){
   secssaved=secs;
@@ -229,7 +273,7 @@ if (mostraver>10){
   lcd.print("Versione:        ");
   delay(1500);
   lcd.setCursor(0, 1);
-  lcd.print("23082017-ITA-V1");
+  lcd.print("01092017-ITA-V2");
   delay(2000);
   mostraver=0;
   }
@@ -345,15 +389,15 @@ lcd.print("00");
       delay(10000);
       }
 
-if(hours < 13){
-    for (int thisNote = 0; thisNote < hours; thisNote++) {
+if(hours < 12){
+    for (int thisNote = 0; thisNote < hours+1; thisNote++) {
     tone(3,  NOTE_E3, 1000);
     digitalWrite(buzzer, HIGH);
     delay(1000);
    
     noTone(3);
     digitalWrite(buzzer, LOW);
-    delay(750);
+    delay(1000);
  
   }
 }
@@ -462,9 +506,8 @@ else{
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
     noTone(3);
-    
-
   }
+    
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Chimes a mano");
@@ -571,4 +614,9 @@ if(hours==24){
   if (month >12){
     month=1;
     year=year+1;}
+    
+  if(fatto==true){
+    fatto=false;
+    }
+  }
   }
